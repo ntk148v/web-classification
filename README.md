@@ -25,7 +25,7 @@ Một các ví dụ: mỗi ví dụ bao gồm biểu diễn của một trang We
 **Key word: Web classification**
 
 1. Sử dụng thư viện scrapy, BeautifulSoup, html5lib để crawling website được đưa link vào. Sau đó biểu diễn và lưu lại định dạng csv(?) có các trường sau: 'title', 'url', 'content', 'label'.
-2. Lọc ra Bag-Of-Words từ content và biểu diễn sang định dạng vector (Text feature extraction)[http://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction]
+2. Lọc ra Bag-Of-Words từ content và biểu diễn sang định dạng vector [Text feature extraction](http://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction)
 3. Thực hiện phân loại bằng nhiều phương pháp, đưa ra kết quả và thời gian để phân loại. (Sklearn)
 4. So sánh và đưa ra nhận định về kết quả hiện có.
 5. Ý tưởng: Xây dựng cho 1 trang web (Django, Flask...) có giao diện cho nhập link và chọn phương pháp phân loại.
