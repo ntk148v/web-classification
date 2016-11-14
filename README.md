@@ -32,8 +32,9 @@ Một các ví dụ: mỗi ví dụ bao gồm biểu diễn của một trang We
 
 ## Tài liệu tham khảo.
 
-1. [Sklearn](http://scikit-learn.org/)
+1. [Sklearn](http://scikit-learn.org/) --> [Must read](http://scikit-learn.org/stable/tutorial/basic/tutorial.html)
 2. [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 3. [Scrapy](https://scrapy.org/)
 4. [Multiclass classification - Concept](https://en.wikipedia.org/wiki/Multiclass_classification)
 5. [Multiclass classification - Sklearn](http://scikit-learn.org/stable/modules/multiclass.html)
+6. [Tunning the hyper-parameters of an estimator](http://scikit-learn.org/stable/modules/grid_search.html#grid-search)
