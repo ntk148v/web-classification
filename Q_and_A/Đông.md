@@ -1,6 +1,8 @@
 Câu 1: các tham số đầu vào: 1 tham số thể hiện thuật toán mà người dùng muốn chọn là KNN hay SVM hay chọn cả 2.
 
-Câu 2: Cái này e  không biết ạ vì e chưa tìm hiểu phần crawl sẽ làm gì và thu được dữ liệu như nào.
+Câu 2: Cái này e nghĩ lưu trên đâu cũng được ạ. 
+Lúc đầu e sợ lưu trong csv thì nếu phần content của web page đó mà dài thì sợ ô trong exel k đủ nhưng e search thì 1 ô nó 
+chứa được 32,767 kí tự nên chắc là ổn ạ.
 
 câu 3: 
 - Phải biểu diễn dưới dạng vector vì mỗi quan sát sẽ có n thuộc tính => biểu diễn mỗi quan sát thành 1 vector n chiều dưới
@@ -18,7 +20,8 @@ khi sử dụng KNN hay tìm ra siêu phẳng (phi tuyến) khi sử dụng SVM 
   + Đặt X = vectorizer.fit_transform(corpus) để tìm ra ma trận có các hàng ứng với kết quả của các document trong corpus
     Để chuyền X thành mảng dùng X.toarray()
   
- Câu 4-5: câu này e chưa đọc tới ạ.@@ E đang đọc tiếp, vì phần Text feature extraction đọc docs khó hiểu quá.
+
+Câu 4-5: câu này e chưa đọc tới ạ.@@ E đang đọc tiếp, vì phần Text feature extraction đọc docs khó hiểu quá.
 
  
  
