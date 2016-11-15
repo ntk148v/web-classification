@@ -1,14 +1,10 @@
 import logging
-from configparser import ConfigParser
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 from classification import conf
 
 
-parser = ConfigParser()
 LOG = logging.getLogger(__name__)
-
-parser.read('conf.ini')
 
 
 def get_stop_words(language):
