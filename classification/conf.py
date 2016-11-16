@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 
@@ -27,3 +28,12 @@ KNN_PARAMS = {
     'n_neighbors': np.range(1, 31, 2),
     'metric': ['euclidean', 'minkowski', 'manhattan']
 }
+
+# Saved DIR path
+
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+SAVED_DIR = CURRENT_DIR + '/saved/'
+
+# Vietnam stopwords file
+
+VN_SW = CURRENT_DIR + 'vietnamese-stopwords-dash.txt'
