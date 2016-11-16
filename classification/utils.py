@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from classification import conf
 
 
+nltk.download('stopwords')
 LOG = logging.getLogger(__name__)
 ENG_STOPWORDS = set(nltk.corpus.stopwords.words('english'))
 NON_ENG_STOPWORDS = set(nltk.corpus.stopwords.words()) - ENG_STOPWORDS
