@@ -1,10 +1,9 @@
 import logging
 import numpy as np
-import pickle
-import pymysql
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report
+# import pickle
+# from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import GridSearchCV
+# from sklearn.metrics import classification_report
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
@@ -34,8 +33,8 @@ class Classifier(object):
         contents = []
         labels = []
         for p in train_set:
-            contents.append(d['content'])
-            labels.append(d['label'])
+            contents.append(p['content'])
+            labels.append(p['label'])
         return (contents, labels)
 
     def _set_estimator(self, params):
@@ -49,7 +48,7 @@ class Classifier(object):
 
     def word_to_vector(self):
         """Convert from text to vector."""
-        contents, labels = load_train_set()
+        contents, labels = self.load_train_set()
         if self.text_extract_type is 'Bag Of Words':
             self.X = utils.bag_of_words(contents)
         else:

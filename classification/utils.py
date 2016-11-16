@@ -1,3 +1,4 @@
+import pymysql
 import logging
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
@@ -20,7 +21,7 @@ def bag_of_words(data):
     vectorizer = CountVectorizer(stop_words=get_stop_words(),
                                  token_pattern=r'\b[^\W\d_]+\b')
     LOG.info('Convert contents to BOW.')
-    return vectorizer.fit_transform(contents)
+    return vectorizer.fit_transform(data)
 
 
 def td_idf(data):
@@ -29,7 +30,7 @@ def td_idf(data):
     :param str data: list of strings.
     :rtype:
     """
-    tf_transformers = TfidfTransformer(use_idf=True).fit(bag_of_words())
+    tf_transformers = TfidfTransformer(use_idf=True).fit(bag_of_words(data))
     LOG.info('Convert contents to TF-IDF.')
     return tf_transformers
 
@@ -55,5 +56,5 @@ def get_db_connection():
                                  db=conf.MYSQL_DB,
                                  charset='utf8mb4',
                                  cursorclass=pymysql.cursors.DictCursor)
-    LOG.info('Connect to db {}' . format(parser.get('mysql', 'db')))
+    LOG.info('Connect to db {}' . format(conf.MYSQL_DB))
     return connection

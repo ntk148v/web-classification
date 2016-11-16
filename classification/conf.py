@@ -23,7 +23,7 @@ SVM_PARAMS = [
     }
 ]
 
-K-NN_PARAMS = {
-    'n_neighbors': np.range(1, 31, 2).
+KNN_PARAMS = {
+    'n_neighbors': np.range(1, 31, 2),
     'metric': ['euclidean', 'minkowski', 'manhattan']
 }
