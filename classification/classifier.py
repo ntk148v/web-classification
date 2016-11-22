@@ -1,6 +1,5 @@
 import logging
 import numpy as np
-import pickle
 # from sklearn.metrics import classification_report
 # from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
@@ -19,17 +18,16 @@ class Classifier(object):
 
     """Classifier class"""
 
-    def __init__(self, algorithm, text_extract_type, language):
+    def __init__(self, algorithm, text_extract_type, is_eng=True):
         """
         :param str algorithm: choosen algorithm will be used to classify.
         :param str text_extract_type: text extraction (Bag of Words & TF_IDF).
-        :param str language: language (vi or en).
+        :param boolean is_eng: language can be eng or vi.
         """
         self.algorithm = algorithm
         self.text_extract_type = text_extract_type
-        self.language = language
+        self.is_eng = is_eng
         self.estimator = None
-        self.is_saved = False
         self.pickle_file = conf.SAVED_DIR + self.algorithm + \
             '_' + self.text_extract_type + '-' + self.language + '.pickle'
         self.train()
@@ -51,9 +49,9 @@ class Classifier(object):
         """Convert from text to vector."""
         contents, labels = self.load_train_set()
         if self.text_extract_type == 'Bag Of Words':
-            self.X = utils.bag_of_words(contents)
+            self.X = utils.bag_of_words(contents, self.is_eng)
         else:
-            self.X = utils.td_idf(contents)
+            self.X = utils.td_idf(contents, self.is_eng)
 
         self.y = np.array(labels)
 
@@ -79,26 +77,10 @@ class Classifier(object):
         if not self.estimator:
             self._tuning_parameters()
         else:
-            self.estimator.fit(self.X)
+            self.estimator.fit(self.X, self.y)
 
     def predict(self, X):
         self.estimator.predict(X)
 
     def evaluate(self, X, y, estimator, test_size=0.4, confusion=False):
         pass
-
-    def save(self):
-        """Save Classifier object to file with pickle."""
-        LOG.info('Saving Classifier object to {}' . format(self.pickle_file))
-        pickle.dump(self, open(self.pickle_file, 'wb'))
-        self.is_saved = True
-
-    def load(self):
-        """Load Classifier object from file with pickle."""
-        if self.is_saved:
-            LOG.info('Loading saved Classifier object from {}' .
-                     format(self.pickle_file))
-            return pickle.loads(open(self.pickle_file, 'rb'))
-        else:
-            LOG.info('Unsaved object, try Classifier.save()')
-            return None

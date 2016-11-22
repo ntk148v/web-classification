@@ -1,3 +1,5 @@
+import os
+import pickle
 import pymysql
 import logging
 import nltk
@@ -85,3 +87,17 @@ def get_data_from_db(query, rows):
     finally:
         LOG.info('Close database connection.')
         connection.close()
+
+
+def save(obj, path):
+    if os.path.isfile(path):
+        LOG.info('File existed! Use load() method.')
+    else:
+        pickle.dump(obj, open(path, 'wb'), pickle.HIGHEST_PROTOCOL)
+
+
+def load(path):
+    if os.path.isfile(path):
+        LOG.info('File doesnt existed!')
+    else:
+        pickle.load(open(path, 'rb'))
