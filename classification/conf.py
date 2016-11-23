@@ -10,7 +10,7 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'PASSWORD'
 MYSQL_DB = 'DB_NAME'
 QUERY = "SELECT `id`, `content`, `label` FROM `DB_NAME`"
-
+NUMBER_ROWS = 1000
 # Tunning Parameters
 
 SVM_PARAMS = [
