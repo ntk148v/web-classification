@@ -29,14 +29,14 @@ class Classifier(object):
         self.is_eng = is_eng
         self.estimator = None
         self.pickle_file = conf.SAVED_DIR + self.algorithm + \
-            '_' + self.text_extract_type + '-' + self.language + '.pickle'
+            '_' + self.text_extract_type + '_' + \
+            ''.join('eng' if self.is_en else 'vi') + '.pickle'
         self.train()
 
     def load_train_set(self):
         """Load train set from database."""
-        query = "SELECT `id`, `content`, `label`, `link` FROM " +\
-                conf.TRAINING_TABLE
-        train_set = utils.get_data_from_db(query, 10000)
+        query = conf.QUERY
+        train_set = utils.get_data_from_db(query, conf.NUMBER_ROWS)
 
         contents = []
         labels = []
