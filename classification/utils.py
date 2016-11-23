@@ -54,8 +54,8 @@ def td_idf(data, is_eng=True):
     :param boolean is_eng: True if English.
     :rtype:
     """
-    tf_transformers = TfidfTransformer(use_idf=True).fit(bag_of_words(data,
-                                                                      is_eng))
+    tf_transformers = TfidfTransformer(use_idf=True).fit_transform(
+        bag_of_words(data, is_eng))
     LOG.info('Convert contents to TF-IDF.')
     return tf_transformers
 
@@ -97,7 +97,8 @@ def save(obj, path):
 
 
 def load(path):
-    if os.path.isfile(path):
+    if not os.path.isfile(path):
         LOG.info('File doesnt existed!')
+        raise FileNotFoundError()
     else:
-        pickle.load(open(path, 'rb'))
+        return pickle.load(open(path, 'rb'))

@@ -9,8 +9,7 @@ MYSQL_PORT = 3306
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'PASSWORD'
 MYSQL_DB = 'DB_NAME'
-
-TRAINING_TABLE = 'TRAINING_TABLE_NAME'
+QUERY = "SELECT `id`, `content`, `label` FROM `DB_NAME`"
 
 # Tunning Parameters
 
