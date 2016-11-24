@@ -99,6 +99,6 @@ def save(obj, path):
 def load(path):
     if not os.path.isfile(path):
         LOG.info('File doesnt existed!')
-        raise FileNotFoundError()
+        raise IOError()
     else:
         return pickle.load(open(path, 'rb'))
