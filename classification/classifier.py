@@ -1,7 +1,5 @@
 import logging
 import numpy as np
-# from sklearn.metrics import classification_report
-# from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.multiclass import OneVsOneClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -65,7 +63,11 @@ class Classifier(object):
             tmp_estimator = KNeighborsClassifier()
             pre_tune_params = conf.KNN_PARAMS
 
-        grid_search = GridSearchCV(tmp_estimator, pre_tune_params, cv=5)
+        # Tuning estimator, modify n_jobs and pre_dispatch depend on
+        # your machine, which run this. More details, plz read sklearn
+        # documentation about GridSearchCV.
+        grid_search = GridSearchCV(tmp_estimator, pre_tune_params,
+                                   cv=5, n_jobs=-1, pre_dispatch='0.5*n_jobs')
         grid_search.fit(self.X, self.y)
         LOG.info('Tuning the hyper-parameters of an {} estimator' .
                  format(self.algorithm))
@@ -73,14 +75,10 @@ class Classifier(object):
             if self.algorithm == 'SVM' else grid_search.best_estimator_
 
     def train(self):
+        LOG.info('Training...')
         self.word_to_vector()
         if not self.estimator:
             self._tuning_parameters()
-        else:
-            self.estimator.fit(self.X, self.y)
 
     def predict(self, X):
         self.estimator.predict(X)
-
-    def evaluate(self, X, y, estimator, test_size=0.4, confusion=False):
-        pass
