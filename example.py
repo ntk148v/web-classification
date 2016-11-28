@@ -1,3 +1,5 @@
+import multiprocessing as mp
+
 from classification import classifier
 from classification import utils
 
@@ -18,4 +20,6 @@ def main():
     utils.save(clf4, clf4.pickle_file)
 
 
-main()
+if __name__ == '__main__':
+    mp.set_start_method('forkserver')
+    main()
