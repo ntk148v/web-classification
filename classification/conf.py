@@ -27,16 +27,16 @@ SVM_PARAMS = [
     {
         'kernel': ['rbf'],
         'gamma': [1e-3, 1e-4],
-        'C': [1, 10, 100, 1000]
+        'C': [1, 10, 100]
     },
     {
         'kernel': ['linear'],
-        'C': [1, 10, 100, 1000]
+        'C': [1, 10, 100]
     }
 ]
 
 KNN_PARAMS = {
-    'n_neighbors': np.arange(1, 31, 2),
+    'n_neighbors': [101],
     'metric': ['euclidean', 'minkowski', 'manhattan']
 }
 
