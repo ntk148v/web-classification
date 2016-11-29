@@ -63,7 +63,7 @@ def td_idf(data, is_eng=True):
     return tf_transformers
 
 
-def get_data_from_db(query, rows, engine=conf.DB_ENGINE):
+def get_data_from_db(query, rows, engine=conf.DEFAULT_DB_ENGINE):
     """Connect to database and get data from it.
 
     :param str query: sql query.
@@ -82,18 +82,18 @@ def get_data_from_db(query, rows, engine=conf.DB_ENGINE):
                                          port=conf.MYSQL_PORT,
                                          user=conf.MYSQL_USER,
                                          password=conf.MYSQL_PASSWORD,
-                                         db=conf.DB,
+                                         db=conf.MYSQL_DB,
                                          charset='utf8mb4',
                                          cursorclass=pymysql.cursors.
                                          DictCursor)
         elif engine.lower() == 'sqlite':
-            connection = sqlite3.connect(conf.DB)
-        LOG.info('Connect to {} db - {}' . format(engine, conf.DB))
+            connection = sqlite3.connect(conf.SQLITE_DB)
+        LOG.info('Connected to {}!' . format(engine))
 
         with connection.cursor() as cursor:
             cursor.execute(query)
             result = cursor.fetchmany(rows)
-            LOG.info('Get data from database.')
+            LOG.info('Get random data from database.')
         return result
     except Exception as e:
         LOG.exception('Failed when connecting to database: {}. ' . format(e))

@@ -10,9 +10,16 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'PASSWORD'
 
 # Database
-DB_ENGINE = 'MYSQL'
-DB = 'DB_NAME'
-QUERY = "SELECT `id`, `content`, `label` FROM `DB_NAME`"
+DEFAULT_DB_ENGINE = 'MYSQL'
+MYSQL_DB = 'DB_NAME'
+SQLITE_DB = 'DB_PATH - e.x: /home/user/data.sqlite'
+
+# [Notice]: Depend on DB Engine you choose, queries are different.
+# In MySQL, is RAND(), but in SQLite, it is RANDOM().
+QUERY = """SELECT `id`, `content`, `type`
+        FROM `news`
+        ORDER BY RANDOM()
+        LIMIT 1000"""
 NUMBER_ROWS = 1000
 # Tunning Parameters
 

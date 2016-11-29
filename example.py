@@ -1,23 +1,28 @@
+import datetime
 import multiprocessing as mp
 
 from classification import classifier
 from classification import utils
 
 
+ALGORITHM = ['SVM', 'K-NN']
+TEXT_EXTRACT = ['TF IDF', 'Bag Of Words']
+
+
+def run_time(algorithm, text_extract):
+    start = datetime.datetime.now()
+    print('#### {} + {} + ENG ####' . format(algorithm, text_extract))
+    clf = classifier.Classifier(algorithm, text_extract, is_eng=True)
+    utils.save(clf, clf.pickle_file)
+    finish = datetime.datetime.now()
+    print('#### Complete after : {} ####' . format(finish - start))
+
+
 def main():
     # Modify your classification/conf.py first to use db.
-    print('---------------- K-NN + TF IDF + ENG -------------------')
-    clf1 = classifier.Classifier('K-NN', 'TF IDF', is_eng=True)
-    utils.save(clf1, clf1.pickle_file)
-    print('---------------- K-NN + Bag Of Words + ENG --------------')
-    clf2 = classifier.Classifier('K-NN', 'Bag Of Words', is_eng=True)
-    utils.save(clf2, clf2.pickle_file)
-    print('---------------- SVM + TF IDF + ENG ---------------------')
-    clf3 = classifier.Classifier('SVM', 'TF IDF', is_eng=True)
-    utils.save(clf3, clf3.pickle_file)
-    print('---------------- SVM + Bag Of Words + ENG ---------------')
-    clf4 = classifier.Classifier('SVM', 'Bag Of Words', is_eng=True)
-    utils.save(clf4, clf4.pickle_file)
+    for a in ALGORITHM:
+        for t in TEXT_EXTRACT:
+            run_time(a, t)
 
 
 if __name__ == '__main__':
