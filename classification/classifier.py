@@ -28,20 +28,13 @@ class Classifier(object):
         self.estimator = None
         self.pickle_file = conf.SAVED_DIR + self.algorithm + \
             '_' + self.text_extract_type + '_' + \
-            ''.join('eng' if self.is_en else 'vi') + '.pickle'
+            ''.join('eng' if self.is_eng else 'vi') + '.pickle'
         self.train()
 
     def load_train_set(self):
         """Load train set from database."""
         query = conf.QUERY
-        train_set = utils.get_data_from_db(query, conf.NUMBER_ROWS)
-
-        contents = []
-        labels = []
-        for p in train_set:
-            contents.append(p['content'])
-            labels.append(p['label'])
-        return (contents, labels)
+        return utils.get_data_from_db(query, conf.NUMBER_ROWS)
 
     def word_to_vector(self):
         """Convert from text to vector."""

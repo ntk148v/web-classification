@@ -15,11 +15,11 @@ SQLITE_DB = 'DB_PATH - e.x: /home/user/data.sqlite'
 
 # [Notice]: Depend on DB Engine you choose, queries are different.
 # In MySQL, is RAND(), but in SQLite, it is RANDOM().
-QUERY = """SELECT `id`, `content`, `type`
+QUERY = """SELECT `content`, `type`
         FROM `news`
         ORDER BY RANDOM()
-        LIMIT 1000"""
-NUMBER_ROWS = 1000
+        LIMIT 10000"""
+NUMBER_ROWS = 10000
 # Tunning Parameters
 
 SVM_PARAMS = [

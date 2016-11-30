@@ -90,11 +90,22 @@ def get_data_from_db(query, rows, engine=conf.DEFAULT_DB_ENGINE):
             connection = sqlite3.connect(conf.SQLITE_DB)
         LOG.info('Connected to {}!' . format(engine))
 
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            result = cursor.fetchmany(rows)
-            LOG.info('Get random data from database.')
-        return result
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchmany(rows)
+        LOG.info('Get random data from database.')
+
+        contents = []
+        labels = []
+        if engine.lower() == 'mysql':
+            for r in result:
+                contents.append(r['content'])
+                labels.append(r['label'])
+        else:
+            for r in result:
+                contents.append(r[0].strip())
+                labels.append(r[1])
+        return (contents, labels)
     except Exception as e:
         LOG.exception('Failed when connecting to database: {}. ' . format(e))
     finally:
@@ -104,6 +115,7 @@ def get_data_from_db(query, rows, engine=conf.DEFAULT_DB_ENGINE):
 
 
 def save(obj, path):
+    """Save Classifier object to pickle file."""
     if os.path.isfile(path):
         LOG.info('File existed! Use load() method.')
     else:
@@ -111,6 +123,7 @@ def save(obj, path):
 
 
 def load(path):
+    """Load Classifier object from pickle file"""
     if not os.path.isfile(path):
         LOG.info('File doesnt existed!')
         raise IOError()
@@ -118,7 +131,7 @@ def load(path):
         return pickle.load(open(path, 'rb'))
 
 
-def evaluate(self, X, y, estimator, test_size=0.4, confusion=False):
+def evaluate(X, y, estimator, test_size=0.4, confusion=False):
     """Evaluate algorithm.
     :param numpy matrix X: dataset.
     :param numpy matrix y: label matrix.
