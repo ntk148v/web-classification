@@ -6,7 +6,7 @@ import pymysql
 import sqlite3
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 from classification import conf
 
@@ -37,30 +37,22 @@ def get_stop_words(is_eng=True):
         return vn_stopwords
 
 
-def bag_of_words(data, is_eng=True):
-    """Convert a list of strings (contents) to a BOW representation of it.
+def bag_of_words(is_eng=True):
+    """Bag of words vectorize.
 
-    :param str data: list of strings.
     :param boolean is_eng: True if English.
-    :rtype: scipy.sparse.coo_matrix
     """
-    vectorizer = CountVectorizer(stop_words=get_stop_words(is_eng),
-                                 token_pattern=r'\b[^\W\d_]+\b')
-    LOG.info('Convert contents to BOW.')
-    return vectorizer.fit_transform(data)
+    return CountVectorizer(stop_words=get_stop_words(is_eng),
+                           token_pattern=r'\b[^\W\d_]+\b')
 
 
 def td_idf(data, is_eng=True):
-    """Convert a list of strings (contents) to a TF_IDF representation of it.
+    """Tf Idf vectorize.
 
-    :param str data: list of strings.
     :param boolean is_eng: True if English.
-    :rtype:
     """
-    tf_transformers = TfidfTransformer(use_idf=True).fit_transform(
-        bag_of_words(data, is_eng))
-    LOG.info('Convert contents to TF-IDF.')
-    return tf_transformers
+    return TfidfVectorizer(stop_words=get_stop_words(is_eng),
+                           token_pattern=r'\b[^\W\d_]+\b')
 
 
 def get_data_from_db(query, rows, engine=conf.DEFAULT_DB_ENGINE):

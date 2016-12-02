@@ -39,11 +39,15 @@ class Classifier(object):
     def word_to_vector(self):
         """Convert from text to vector."""
         contents, labels = self.load_train_set()
-        if self.text_extract_type == 'Bag Of Words':
-            self.X = utils.bag_of_words(contents, self.is_eng)
-        else:
-            self.X = utils.td_idf(contents, self.is_eng)
 
+        if self.text_extract_type == 'Bag Of Words':
+            LOG.info('Convert contents to BOW.')
+            self.vectorize = utils.bag_of_words()
+        else:
+            LOG.info('Convert contents to TF-IDF.')
+            self.vectorize = utils.td_idf()
+
+        self.X = self.vectorize.fit_transform(contents)
         self.y = np.array(labels)
 
     def _tuning_parameters(self):
@@ -73,5 +77,6 @@ class Classifier(object):
         if not self.estimator:
             self._tuning_parameters()
 
-    def predict(self, X):
-        self.estimator.predict(X)
+    def predict(self, content):
+        content = self.vectorize.transform(content)
+        self.estimator.predict(content)
