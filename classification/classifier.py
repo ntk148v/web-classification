@@ -42,12 +42,12 @@ class Classifier(object):
 
         if self.text_extract_type == 'Bag Of Words':
             LOG.info('Convert contents to BOW.')
-            self.vectorize = utils.bag_of_words()
+            self.vectorizer = utils.bag_of_words()
         else:
             LOG.info('Convert contents to TF-IDF.')
-            self.vectorize = utils.td_idf()
+            self.vectorizer = utils.td_idf()
 
-        self.X = self.vectorize.fit_transform(contents)
+        self.X = self.vectorizer.fit_transform(contents)
         self.y = np.array(labels)
 
     def _tuning_parameters(self):
@@ -68,8 +68,7 @@ class Classifier(object):
         grid_search.fit(self.X, self.y)
         LOG.info('Tuning the hyper-parameters of an {} estimator' .
                  format(self.algorithm))
-        self.estimator = OneVsOneClassifier(grid_search.best_estimator_) \
-            if self.algorithm == 'SVM' else grid_search.best_estimator_
+        self.estimator = grid_search.best_estimator_
 
     def train(self):
         LOG.info('Training...')

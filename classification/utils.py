@@ -46,7 +46,7 @@ def bag_of_words(is_eng=True):
                            token_pattern=r'\b[^\W\d_]+\b')
 
 
-def td_idf(dis_eng=True):
+def td_idf(is_eng=True):
     """Tf Idf vectorize.
 
     :param boolean is_eng: True if English.
