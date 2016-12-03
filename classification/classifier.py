@@ -1,7 +1,6 @@
 import logging
 import numpy as np
 from sklearn.model_selection import GridSearchCV
-from sklearn.multiclass import OneVsOneClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
