@@ -76,5 +76,5 @@ class Classifier(object):
             self._tuning_parameters()
 
     def predict(self, content):
-        content = self.vectorize.transform(content)
+        content = self.vectorizer.transform(content)
         self.estimator.predict(content)
