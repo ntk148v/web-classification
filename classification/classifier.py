@@ -77,4 +77,4 @@ class Classifier(object):
 
     def predict(self, content):
         content = self.vectorizer.transform(content)
-        self.estimator.predict(content)
+        return self.estimator.predict(content)
