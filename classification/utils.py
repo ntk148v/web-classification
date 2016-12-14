@@ -7,6 +7,7 @@ import sqlite3
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn_evaluation import ClassifierEvaluator
 
 from classification import conf
 
@@ -123,6 +124,25 @@ def load(path):
         return pickle.load(open(path, 'rb'))
 
 
+def split_train_test(X, y, estimator, test_size=0.4):
+    LOG.info('Evaluate with test_size is %2.0f%%' % (test_size * 100))
+    # Split into a training and testing set
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        test_size=test_size)
+    estimator.fit(X_train, y_train)
+    y_pred = estimator.predict(X_test)
+    y_score = estimator.predict_proba(X_test)
+    result = {
+        'X_train': X_train,
+        'X_test': X_test,
+        'y_train': y_train,
+        'y_test': y_test,
+        'y_pred': y_pred,
+        'y_score': y_score
+    }
+    return result
+
+
 def evaluate(X, y, estimator, test_size=0.4, confusion=False):
     """Evaluate algorithm.
     :param numpy matrix X: dataset.
@@ -130,14 +150,38 @@ def evaluate(X, y, estimator, test_size=0.4, confusion=False):
     :param float test_size: testset's size/alldataset's size.
     :param boolean confusion: use confusion matrix or not.
     """
-    LOG.info('Evaluate with test_size is %2.0f%%' % (test_size * 100))
-    # Split into a training and testing set
-    X_train, X_test, y_train, y_test = train_test_split(X, y,
-                                                        test_size=test_size)
-    estimator.fit(X_train, y_train)
-    y_predicted = estimator.predict(X_test)
+    result = split_train_test(X, y, estimator, test_size)
 
     if not confusion:
-        return classification_report(y_test, y_predicted)
+        return classification_report(result['y_test'], result['y_pred'])
     else:
-        return confusion_matrix(y_test, y_predicted)
+        return confusion_matrix(result['y_test'], result['y_pred'])
+
+
+def visualize_with_plot(X, y, estimator, test_size=0.4):
+    result = split_train_test(X, y, estimator, test_size)
+    target_names = ['business', 'entertainment', 'health', 'politics',
+                    'sports', 'technology']
+    plot.confusion_matrix(result['y_test'], result['y_pred'],
+                          target_names=target_names)
+
+
+def visualize(X, y, estimator, test_size=0.4, html=False):
+    result = split_train_test(X, y, estimator, test_size)
+    target_names = ['business', 'entertainment', 'health', 'politics',
+                    'sports', 'technology']
+    ce = ClassifierEvaluator(estimator, result['y_test'], result['y_pred'],
+                            result['y_score'], target_names=target_names)
+    if html:
+        template = '''
+            # Report
+            {estimator_type}
+            {date}
+            {confusion_matrix}
+            {roc}
+            {precision_recall}
+            '''
+
+        ce.generate_report(template, path='report.html')
+    else:
+        ce.confusion_matrix
