@@ -43,19 +43,3 @@
 
 6. Chạy giao diện hệ thống (Khi này, các file pickle đã được lưu sau khi
    training sẽ được tái sử dụng).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
