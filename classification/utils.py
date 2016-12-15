@@ -158,30 +158,39 @@ def evaluate(X, y, estimator, test_size=0.4, confusion=False):
         return confusion_matrix(result['y_test'], result['y_pred'])
 
 
-def visualize_with_plot(X, y, estimator, test_size=0.4):
-    result = split_train_test(X, y, estimator, test_size)
-    target_names = ['business', 'entertainment', 'health', 'politics',
-                    'sports', 'technology']
-    plot.confusion_matrix(result['y_test'], result['y_pred'],
-                          target_names=target_names)
+def visualize(X, y, estimator, test_size=0.4, path=None, html=True):
+    """Visualize Result
 
-
-def visualize(X, y, estimator, test_size=0.4, html=False):
+    :param numpy matrix X: dataset.
+    :param numpy matrix y: label matrix.
+    :param float test_size: testset's size/alldataset's size.
+    """
     result = split_train_test(X, y, estimator, test_size)
     target_names = ['business', 'entertainment', 'health', 'politics',
                     'sports', 'technology']
     ce = ClassifierEvaluator(estimator, result['y_test'], result['y_pred'],
-                            result['y_score'], target_names=target_names)
-    if html:
+                             result['y_score'], target_names=target_names)
+    if html and path:
         template = '''
             # Report
-            {estimator_type}
-            {date}
-            {confusion_matrix}
-            {roc}
-            {precision_recall}
+
+            ###1. Estimator Name.
+
+                `{estimator_type}`
+
+            ###2. Confusion Matrix.
+
+                {confusion_matrix}
+
+            ###3. ROC Graph.
+
+                {roc}
+
+            ###4. Precision Recall Graph.
+
+                {precision_recall}
             '''
 
-        ce.generate_report(template, path='report.html')
+        ce.generate_report(template, path=path)
     else:
         ce.confusion_matrix
