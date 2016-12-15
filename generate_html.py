@@ -8,6 +8,8 @@ from classification import utils
 def main(pickle_path):
     clf = utils.load(pickle_path)
     html_path = clf.algorithm + '_' + clf.text_extract_type + '.html'
+    if 'SVM' in clf.pickle_file:
+    	clf.estimator.set_params(probability=True)
     utils.visualize(clf.X, clf.y, clf.estimator, path=html_path)
 
 

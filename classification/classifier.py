@@ -53,7 +53,7 @@ class Classifier(object):
         """Tuning the hyper-parameters of an estimator."""
 
         if self.algorithm == 'SVM':
-            tmp_estimator = SVC(C=1, probability=True)
+            tmp_estimator = SVC(C=1)
             pre_tune_params = conf.SVM_PARAMS
         else:
             tmp_estimator = KNeighborsClassifier()
