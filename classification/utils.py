@@ -143,7 +143,7 @@ def split_train_test(X, y, estimator, test_size=0.4):
     return result
 
 
-def evaluate(X, y, estimator, test_size=0.4, confusion=False):
+def evaluate(X, y, estimator, test_size=0.33, confusion=False):
     """Evaluate algorithm.
     :param numpy matrix X: dataset.
     :param numpy matrix y: label matrix.
@@ -158,7 +158,7 @@ def evaluate(X, y, estimator, test_size=0.4, confusion=False):
         return confusion_matrix(result['y_test'], result['y_pred'])
 
 
-def visualize(X, y, estimator, test_size=0.4, path=None, html=True):
+def visualize(X, y, estimator, test_size=0.33, path=None, html=True):
     """Visualize Result
 
     :param numpy matrix X: dataset.
